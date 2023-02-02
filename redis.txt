@@ -7,6 +7,15 @@ object encoding key
 
 
 
+
+Redis:快速的原因：存储在内存， IO多路（多个网络连接）复用（复用同一个线程）， 异步IO
+
+
+使用要求：存的进，取的出。
+
+
+
+
 编码文档：https://blog.csdn.net/zwx900102/article/details/109543659
 
 为什么Redis的字符串对象是二进制安全的
@@ -29,7 +38,7 @@ struct sdshdr{
 
 list 列表： 
 		ziplist:当列表的元素个数小于list-max-ziplist-entries配置（ 默认512个） ， 同时列表中每个元素的值都小于list-max-ziplist 默认64字节） ， Redis会选用ziplist来作为列表的内部实现来减少内存的使用
- 		linkedlist:
+ 		linkedlist:双向链表编码
  		quicklist:Redis3.2版本提供了quicklist内部编码， 简单地说它是以一个ziplist为节点的linkedlist，它结合了ziplist和linkedlist两者的优势， 为列表类型提供了一种更为优秀的内部编码实现
 
 
@@ -60,17 +69,72 @@ set 集合：
 
 	hashtable:当集合类型无法满足intset的条件时， Redis会使用hashtable作为集合的内部实现。
 
-	intset:（ 整数集合） ： 当集合中的元素都是整数且元素个数小于set-maxintset-entries配置（ 默认512个） 时， Redis会选用intset来作为集合的内部实现， 从而减少内存的使用。
+	intset:（ 整数集合） ： 当集合中的元素都是整数且元素个数小于set-max-intset-entries配置（ 默认512个） 时， Redis会选用intset来作为集合的内部实现， 从而减少内存的使用。
+
+	应用场景：朋友圈点赞，取消点赞，点赞列表;    猜你喜欢，可能认识的人
 
 
 
-
-
-zset 有序集合： 
+zset 有序集合：
 	skiplist:当ziplist条件不满足时， 有序集合会使用skiplist作为内部实现， 因为此时ziplist的读写效率会下降
-	ziplist:当有序集合的元素个数小于zset-max-ziplistentries配置（ 默认128个） ， 同时每个元素的值都小于zset-max-ziplist-value配
+	ziplist:当有序集合的元素个数小于zset-max-ziplist-entries配置（ 默认128个） ， 同时每个元素的值都小于zset-max-ziplist-value配
 置（ 默认64字节） 时， Redis会用ziplist来作为有序集合的内部实现， ziplist可以有效减少内存的使用
 	listpack:
+
+
+
+watch命令:添加乐观锁，被不同的客户端修改数据后，会执行操作失败。
+
+multi :事物
+
+exec: 提交事物
+
+
+持久化
+
+	rdb：二进制文件
+
+	aof：保存命令操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
