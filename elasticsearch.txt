@@ -1,0 +1,34 @@
+
+
+
+
+docker安装：
+
+docker run --name kibana \
+ -v $PWD/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml -p 5601:5601 \
+ -d kibana:7.17.3
+
+
+docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+-v $PWD/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v $PWD/elasticsearch/data:/usr/share/elasticsearch/data \
+-v $PWD/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-d elasticsearch:7.17.3
+
+
+
+进入es容器执行命令：bin/elasticsearch-setup-passwords interactive   
+为kibana, beats, apm_system初始化密码Initiating the setup of passwords for reserved users elastic,apm_system,kibana,kibana_system,logstash_system,beats_system,remote_monitoring_user.
+
+
+
+
+增:
+
+删:
+
+改:
+
+查:
+
+
