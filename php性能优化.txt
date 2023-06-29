@@ -2,4 +2,4 @@
 
 
 
-添加apc缓存模块，（将php代码生成opcode码，缓存起来）提升性能
+添加apc(Alternative PHP Cache)缓存模块，（将php代码生成opcode码，缓存起来）提升性能
