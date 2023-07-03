@@ -1,8 +1,8 @@
 <?php
 /**
 
-
- *递归思想
+ *时间复杂度（0（nlogn)， 
+ *递归思想，折半递归
 
 */
 
@@ -31,7 +31,7 @@ function sort_quick($arr) {
 	return array_merge($left_array,array($key), $right_arry);
 }
 
-$s = sort_quick(array(7,2,21,6,29, 56, 98,2,3,6,236,99));
+$s = sort_quick([23,12,35,22,27,1,23,4,99]);
 
 
 print_r($s);

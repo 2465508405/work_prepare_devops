@@ -1,0 +1,25 @@
+
+
+
+
+laravel中的设计模式:
+
+工厂模式： RedisManager 对象，既是 Redis 连接的管理者，也是 Redis 连接的创建工厂（predis, phpredis)。
+
+
+
+
+建造者模式：
+查询构造器是 Laravel 中建造者模式的最佳诠释，不过在我们的分析中，大家会发现，之前我们介绍建造者模式时，讲到了建造者模式中四种关键角色。 而在 Laravel 数据库模块的查询构造器中，只有孤零零的 \Illuminate\Database\Query\Builder
+
+
+策略模式：
+队列模块中的策略模式. Illuminate\Queue\QueueManager 其实就是策略模式中的环境类 ( Context ) ，它负责根据我们的配置，实例化不同的队列驱动并进行策略操作。 而 Illuminate\Contracts\Queue\Queue 则是策略抽象 ( Strategy ) ，在它其中包含了队列操作的定义，我们操作队列代码的编写，其实就是面向它的抽象定义进行的。 在 Illuminate\Queue\RedisQueue 等类中，就是策略的具体实现 ( ConcreteStrategy ) ，它们各自根据自己所要对接的队列实现方式 ( Redis, SQS, Database, etc. ) ，实现了队列操作的抽象定义。
+当我们通过队列外观 ( Illuminate\Support\Facades\Queue ) 等方式调用到 QueueManager 时，它就会根据配置和其中绑定关系，创建队列驱动的实现类。 之后，它会将我们的调用，传递到队列驱动的实现类中，通过具体的实现来完成我们的操作。
+通过利用 __call 这个魔术方法，QueueManager 可以非常容易的将调用传递到队列的实现对象中：
+
+
+观察者模式：
+	发布/订阅：
+
+	事件监听：Illuminate\Contracts\Events\Dispatcher 
