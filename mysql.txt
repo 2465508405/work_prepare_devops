@@ -6,7 +6,21 @@ MySQL中至少有7种日志文件：
 
 	作用：
 	确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启MySQL服务时，可根据redo log进行重做，从而达到事务的持久性这一特性。
-	
+
+	内容：
+	物理格式的日志，记录的是物理数据页面的修改的信息，其redo log是顺序写入redo log file的物理文件中去的。
+
+
+	删除时间：
+	当对应事务的脏页写入到磁盘之后，redo log的使命完成，重做日志占用的空间就可以重用（被覆盖）。
+
+	对应的物理文件：
+	默认情况下，对应的物理文件位于数据库的data目录下的ib_logfile1, ib_logfile2，innodb_log_group_home_dir 指定日志文件组所在的路径，默认./，表示在数据库的数据目录下。
+
+	redolog的大小是固定的，MySQL中可通过修改以下2个配置参数，redolog采用循环写的方式记录，当写到结尾时，会回到开头循环写日志：
+	innodb_log_file_size：文件大小
+	innodb_log_files_in_group：文件数量，默认2
+
     回滚日志（undo log）
     二进制日志（binlog）
     错误日志（errorlog）
