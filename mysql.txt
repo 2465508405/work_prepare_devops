@@ -13,13 +13,38 @@ b+tree相对于其他索引数据结构的优势.  : b+数只在叶子结点存�
 
 
 从低到高的索引操作顺序：
+type类型：
 all(全表扫描） < index(全索引扫描) < range (索引范围扫描) < ref(非唯一索引扫描) < eq_ref(唯一索引扫描) < const(结果只有一条的主键或唯一索引扫描)
+system>const>eq_ref>ref>range>index>ALL 
+
+
+const, system:mysql对某部分查询进行优化转为一个常量，用于primary key或unique key的所有列与常数比较时。
+eq_ref：primary key或unique key索引的所有部分被连接使用，最多只会返回一条符合条件的记录
+
+ref：相比eq_ref,不使用唯一索引，而是使用普通索引或者唯一索引的部分前缀。 a.简单的select查询
+
+range：范围扫描通常出现在in(),between,<,>.>=等操作中。
+index:扫描全索引就能拿到的结果
+ALL:全表扫描
+
+
+
+
+
+
+
 
 possible_keys:可能用到的索引
 key:字段实际用到的索引
-ken_len:索引的长度
+ken_len:索引的长度. 表示索引使用的字节数（char(n)就是3n个字节，varchar(n)就是3n+2个字节加的2个字节用来存储字符串长度，因为varchar是变长字符串；date是3个字节；timestamp是4个字节；datetime是8个字节）
 rows:扫面的行数
 type: 扫描类型
+ref: 显示了再key列记录的索引
+rows列：mysql估计要读取并检测的行数，但这个可能不是结果集中的行数
+
+Extra列：额外信息 1）Using index：使用覆盖索引，即select后面的查询字段可以从索引树中获取
+
+
 掌握mysql执行计划的方法
 
 

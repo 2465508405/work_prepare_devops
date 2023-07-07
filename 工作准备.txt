@@ -1,21 +1,23 @@
 
+redis（完事）
+
+elasticsearch（） 
 
 
 
-redis
 
-elasticsearch 
-
-rabbitmq
-
-mysql 
-
-swoole
+rabbitmq（）
 
 
-算法
 
-设计模式
+
+mysql (完事)
+
+swoole（完事）
+
+算法（完事）
+
+设计模式（完事）
 
 
 go语言
